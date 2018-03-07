@@ -5,11 +5,11 @@ import (
 	"bufio"
 	"os"
 	"fmt"
+	"github.com/golang/EchoTCP/constants"
 )
 
 func main() {
-	//conn, _ := net.Dial(Protocol, Address)
-	conn, _ := net.Dial("tcp", "127.0.0.1:5000")
+	conn, _ := net.Dial(constants.Protocol, constants.Address)
 	for {
 		reader := bufio.NewReader(os.Stdin)
 		fmt.Print("-")
