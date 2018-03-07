@@ -15,8 +15,12 @@ func main() {
 	ln, _ := net.Listen(Protocol, Address)
 	conn, _ := ln.Accept()
 	for {
-		message, _ := bufio.NewReader(conn).ReadString('\n')
-		fmt.Print("Message:", string(message))
-		conn.Write([]byte(message + "\n"))
+		if message, err := bufio.NewReader(conn).ReadString('\n'); err != nil {
+			fmt.Println("End Connection!")
+			break
+		} else {
+			fmt.Print("Message:", string(message))
+			conn.Write([]byte(message + "\n"))
+		}
 	}
 }
