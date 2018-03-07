@@ -8,6 +8,7 @@ import (
 )
 
 func main() {
+	//conn, _ := net.Dial(Protocol, Address)
 	conn, _ := net.Dial("tcp", "127.0.0.1:5000")
 	for {
 		reader := bufio.NewReader(os.Stdin)
