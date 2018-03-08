@@ -9,14 +9,20 @@ import (
 
 func main() {
 	ln, _ := net.Listen(constants.Protocol, constants.Address)
-	conn, _ := ln.Accept()
+	i := 0
 	for {
-		if message, err := bufio.NewReader(conn).ReadString('\n'); err != nil {
-			fmt.Println("End Connection!")
-			break
-		} else {
-			fmt.Print("Message: ", string(message))
-			conn.Write([]byte(message + "\n"))
-		}
+		conn, _ := ln.Accept()
+		i++
+		go func (conn net.Conn, i int) {
+			for {
+				if message, err := bufio.NewReader(conn).ReadString('\n'); err != nil {
+					fmt.Println("End Connection!")
+					break
+				} else {
+					fmt.Print("Message(", i, ") : ", string(message))
+					conn.Write([]byte(message + "\n"))
+				}
+			}
+		}(conn, i)
 	}
 }
