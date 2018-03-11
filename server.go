@@ -4,10 +4,10 @@ import (
 	"net"
 	"bufio"
 	"fmt"
-	"github.com/golang/EchoTCP/constants"
 	"os"
 	"os/signal"
 	"syscall"
+	"github.com/golang/EchoTCP/constants"
 )
 
 func main() {
@@ -30,9 +30,10 @@ func main() {
 		connList = append(connList, conn)
 		i++
 		go func(conn net.Conn, i int) {
+			fmt.Println("Start Connection", i)
 			for {
 				if message, err := bufio.NewReader(conn).ReadString('\n'); err != nil {
-					fmt.Println("End Connection!")
+					fmt.Println("End Connection", i)
 					conn.Close()
 					break
 				} else {
@@ -42,4 +43,23 @@ func main() {
 			}
 		}(conn, i)
 	}
+
+	/*
+	stopchan := make(chan struct{})
+	stoppedchan := make(chan struct{})
+
+	go func() {
+		defer close(stoppedchan)
+		defer func() {
+		}()
+		for {
+			select {
+			default:
+
+			case <-stopchan:
+				return
+			}
+		}
+
+	}()*/
 }
