@@ -10,12 +10,19 @@ import (
 
 func main() {
 	conn, _ := net.Dial(constants.Protocol, constants.Address)
+	//c := make(chan bool)
+	go func() {
+		for {
+			m, _ := bufio.NewReader(conn).ReadString('\n')
+			if m == "" {
+				os.Exit(0)
+			}
+			fmt.Print(">", m)
+		}
+	}()
 	for {
 		reader := bufio.NewReader(os.Stdin)
-		fmt.Print("-")
 		text, _ := reader.ReadString('\n')
 		fmt.Fprintf(conn, text+"\n")
-		message, _ := bufio.NewReader(conn).ReadString('\n')
-		fmt.Print(">" + message)
 	}
 }

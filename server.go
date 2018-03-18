@@ -43,23 +43,4 @@ func main() {
 			}
 		}(conn, i)
 	}
-
-	/*
-	stopchan := make(chan struct{})
-	stoppedchan := make(chan struct{})
-
-	go func() {
-		defer close(stoppedchan)
-		defer func() {
-		}()
-		for {
-			select {
-			default:
-
-			case <-stopchan:
-				return
-			}
-		}
-
-	}()*/
 }
